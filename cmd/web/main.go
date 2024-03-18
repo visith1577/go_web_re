@@ -10,8 +10,8 @@ import (
 	"os/signal"
 	"time"
 
-	"visithflt.net/web_t/pkg/models/mysql"
 	_ "github.com/go-sql-driver/mysql"
+	"visithflt.net/web_t/pkg/models/mysql"
 )
 
 type application struct {
@@ -79,7 +79,7 @@ func main() {
 }
 
 func openDB(dsn string) (*sql.DB, error) {
-	db, err := sql.Open("ysql", dsn)
+	db, err := sql.Open("mysql", dsn)
 	if err != nil {
 		return nil, err
 	}
