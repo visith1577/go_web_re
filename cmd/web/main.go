@@ -11,13 +11,13 @@ import (
 	"time"
 
 	_ "github.com/go-sql-driver/mysql"
-	"visithflt.net/web_t/internal/models/mysql"
+	"visithflt.net/web_t/internal/mysql"
 )
 
 type application struct {
 	infoLog *log.Logger
 	errLog  *log.Logger
-	snippets *mysql.SnippetModel
+	snippets *models.SnippetModel
 }
 
 func main() {
@@ -42,7 +42,7 @@ func main() {
 	app := &application{
 		infoLog: infoLog,
 		errLog:  errLog,
-		snippets: &mysql.SnippetModel{DB: db},
+		snippets: &models.SnippetModel{DB: db},
 	}
 
 	srv := &http.Server{
