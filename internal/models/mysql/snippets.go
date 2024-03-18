@@ -2,7 +2,7 @@ package mysql
 
 import (
 	"database/sql"
-	"visithflt.net/web_t/pkg/models"
+	"visithflt.net/web_t/internal/models"
 )
 
 type SnippetModel struct {

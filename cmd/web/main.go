@@ -11,7 +11,7 @@ import (
 	"time"
 
 	_ "github.com/go-sql-driver/mysql"
-	"visithflt.net/web_t/pkg/models/mysql"
+	"visithflt.net/web_t/internal/models/mysql"
 )
 
 type application struct {
@@ -29,7 +29,7 @@ func main() {
 
 	// logging
 	infoLog := log.New(os.Stdout, "INFO\t", log.Ldate|log.Ltime)
-	errLog := log.New(os.Stderr, "ERROR\t", log.Ldate|log.Ltime)
+	errLog := log.New(os.Stderr, "ERROR\t", log.Ldate|log.Ltime|log.Lshortfile)
 
 	db, err := openDB(*dsn)
 
