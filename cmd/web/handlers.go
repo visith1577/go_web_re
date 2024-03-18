@@ -1,10 +1,13 @@
 package main
 
 import (
+	"errors"
 	"fmt"
 	"html/template"
 	"net/http"
 	"strconv"
+
+	"visithflt.net/web_t/internal/models"
 )
 
 func (app *application) homeHandle(w http.ResponseWriter, r *http.Request) {
@@ -15,10 +18,10 @@ func (app *application) homeHandle(w http.ResponseWriter, r *http.Request) {
 	}
 
 	files := []string{
-		"./interface/html/home.page.tmpl", 
+		"./interface/html/home.page.tmpl",
 		"./interface/html/base.layout.tmpl",
 		"./interface/html/footer.partial.tmpl",
-	} 
+	}
 
 	ts, err := template.ParseFiles(files...)
 
@@ -37,14 +40,24 @@ func (app *application) homeHandle(w http.ResponseWriter, r *http.Request) {
 }
 
 func (app *application) showSnippetHandle(w http.ResponseWriter, r *http.Request) {
-	id, err := strconv.Atoi(r.URL.Query().Get("id"))
+	id, err := strconv.Atoi(r.PathValue("id"))
 
 	if err != nil || id < 1 {
 		app.notFound(w)
 		return
 	}
 
-	fmt.Fprintf(w, "Display sippet with ID %d", id)
+	snippet, err := app.snippets.GET(id)
+	if err != nil {
+		if errors.Is(err, models.ErrNoRecord) {
+			app.notFound(w)
+		} else {
+			app.serverError(w, err)
+		}
+		return
+	}
+
+	fmt.Fprintf(w, "%+v", snippet)
 }
 
 func (app *application) createSnippetHandle(w http.ResponseWriter, r *http.Request) {

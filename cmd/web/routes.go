@@ -6,7 +6,7 @@ import "net/http"
 func (app *application) routes() *http.ServeMux {
 	mux := http.NewServeMux()
 	mux.HandleFunc("GET /", app.homeHandle)
-	mux.HandleFunc("GET /snippet", app.showSnippetHandle)
+	mux.HandleFunc("GET /snippet/{id}", app.showSnippetHandle)
 	mux.HandleFunc("POST /snippet/create", app.createSnippetHandle)
 
 	fileServer := http.FileServer(neueredFileSystem{http.Dir("./interface/static/")})
